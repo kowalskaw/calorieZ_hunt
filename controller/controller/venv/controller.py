@@ -66,6 +66,16 @@ def query_users(conn, query):
     return json.dumps(data)
 
 
+def get_user_by_id(conn, user_id):
+    query = '''
+    SELECT * FROM Users where id=?
+    '''
+    cursor = conn.cursor()
+    cursor.execute(query, (id,))
+    data = cursor.fetchall()
+    return json.dumps(data)
+
+
 def main():
     database = "skrypt.db"
     conn = connect_to_db(database)
@@ -102,7 +112,5 @@ def main():
 
         print(result)
 
-
-
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
