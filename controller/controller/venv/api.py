@@ -8,26 +8,30 @@ conn = None
 cursor = None
 users = None
 
+
 @app.route('/')
 def home():
     global conn, cursor, users
-    conn = sqlite3.connect("skrypt.db",  check_same_thread=False)
+    conn = sqlite3.connect("skrypt.db", check_same_thread=False)
     cursor = conn.cursor()
     # managing users
     users = Users(conn, cursor)
     return "Connection to database established. Necessary objects created."
 
-#
-@app.route('/users', methods=['GET'])
+
+# multiple users
+@app.route('/users', methods=['GET', 'DELETE'])
 def users():
     global conn, cursor
     if request.method == 'GET':
         query = request.args.get('query')
         queried_users = users.query_users(query)
         return queried_users
+    if request.method == 'DELETE':
+        print('Delete request')
 
-# params: id
-@app.route('/user', methods=['GET', 'POST', 'UPDATE', 'DELETE'])
+# one user
+@app.route('/user', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def user():
     if request.method == 'GET':
         id = int(request.args.get('id'))
@@ -37,7 +41,7 @@ def user():
         user = request.get_json()
         new_user_id = users.create_user(user)
         return new_user_id
-    elif request.method == 'UPDATE':
+    elif request.method == 'PUT':
         user = request.get_json()
         users.update_user(user)
         return 'User updated'

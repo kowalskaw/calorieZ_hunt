@@ -73,6 +73,7 @@ def update_user():
                  'weight_goal': 55,
                  'user_name': 'MadziaWesołek85',
                  'birthDate': '10.11.1985',
+                 'id' : 4
                  }
     endpoint = '/user'
     response_d = requests.put(url=main_url + endpoint, json=json.dumps(user_dict))
@@ -87,11 +88,11 @@ def delete_user():
 
 if __name__ == '__main__':
     run_db()
-    # get_user_by_id()
-    # query_users()
-    # create_user()
-    # query_users()
-    # update_user()
+    get_user_by_id()
     query_users()
-    delete_user()
+    create_user()
     query_users()
+    update_user()
+    query_users()
+    # delete_user()
+    # query_users()

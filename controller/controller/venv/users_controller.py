@@ -47,7 +47,7 @@ class Users:
             sex = ?, 
             weight = ?,
             height = ?, 
-            alergies = ?, 
+            allergies = ?, 
             calories_intake_daily = ?, 
             weight_goal = ?, 
             user_name = ?, 
@@ -91,10 +91,6 @@ def test():
 
     user = users.get_user_by_id(3)
     print(user)
-
-
-
-
 
 if __name__ == '__main__':
     test()
