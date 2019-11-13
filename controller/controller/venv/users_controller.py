@@ -27,6 +27,17 @@ class Users:
         return self.cursor.lastrowid  # lastrowid returns generated id
 
     def update_user(self, user):
+        user_dict = json.loads(user)
+        list_of_values = []
+        for key in user_dict:
+            if key != 'id':
+                list_of_values.append(user_dict[key])
+
+        list_of_values.append(user_dict['id'])
+
+        # to tuple
+        user_tuple = tuple(list_of_values)
+
         query = '''
         UPDATE Users
         SET password = ?,
@@ -43,7 +54,7 @@ class Users:
             birthDate = ?
         WHERE id = ?
         '''
-        self.cursor.execute(query, user)
+        self.cursor.execute(query, user_tuple)
 
     def delete_user(self, id):
         query = '''

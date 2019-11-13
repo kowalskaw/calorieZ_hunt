@@ -34,16 +34,18 @@ def user():
         user = users.get_user_by_id(id)
         return user
     elif request.method == 'POST':
-        user_dict = request.get_json()
-        new_user_id = users.create_user(user_dict)
-        print('create user')
-
+        user = request.get_json()
+        new_user_id = users.create_user(user)
+        return new_user_id
     elif request.method == 'UPDATE':
-        print('update request')
+        user = request.get_json()
+        users.update_user(user)
+        return 'User updated'
     else:  # delete
-        print('delete request')
-
-    return "user route"
+        id = int(request.args.get('id'))
+        user = users.delete_user(id)
+        return 'User with id ' + str(id) + ' deleted from db'
+    return 'Invalid request'
 
 
 if __name__ == '__main__':

@@ -24,7 +24,7 @@ def query_users():
     q2 = '''
     SELECT * FROM UsersFts WHERE allergies match 'gluten';
     '''
-    q3 =     q1 = '''
+    q3 = q1 = '''
     SELECT * FROM Users
     '''
     # [w jakim miejscu występuje gluten, gluten]
@@ -43,33 +43,55 @@ def get_user_by_id():
 
 def create_user():
     user_dict = {'password': 'supertajnehaslo',
-            'first_name': 'Jadzia',
-            'last_name': 'Marudka',
-            'email': 'superjadzia@gmail.com',
-            'sex': 0,
-            'weight': 60,
-            'height': 165,
-            'allergies': 'gluten laktoza',
-            'calories_intake_daily': 1900,
-            'weight_goal': 55,
-            'user_name': 'JadziaMarudka85',
-            'birthDate': '10.11.1985',
-            }
-    user_tuple = ('supertajnehaslo', 'Jadzia', 'Marudka', 'superjadzia@gmail.com',
-                  0, 60, 165, 'gluten laktoza', 1900, 55, 'JadziaMarudka85', '10.11.1985')
+                 'first_name': 'Jadzia',
+                 'last_name': 'Marudka',
+                 'email': 'superjadzia@gmail.com',
+                 'sex': 0,
+                 'weight': 60,
+                 'height': 165,
+                 'allergies': 'gluten laktoza',
+                 'calories_intake_daily': 1900,
+                 'weight_goal': 55,
+                 'user_name': 'JadziaMarudka85',
+                 'birthDate': '10.11.1985',
+                 }
     endpoint = '/user'
-
-    # sending tuple
-    # response_t = requests.post(url=main_url + endpoint, data=user_tuple, )
-    # print_respone(response_t)
-    # sending dict=json
     response_d = requests.post(url=main_url + endpoint, json=json.dumps(user_dict))
     print_respone(response_d)
 
 
+def update_user():
+    user_dict = {'password': 'supertajnehaslo',
+                 'first_name': 'Magdalena',
+                 'last_name': 'Wesoła',
+                 'email': 'superjadzia@gmail.com',
+                 'sex': 0,
+                 'weight': 60,
+                 'height': 165,
+                 'allergies': 'gluten laktoza',
+                 'calories_intake_daily': 1900,
+                 'weight_goal': 55,
+                 'user_name': 'MadziaWesołek85',
+                 'birthDate': '10.11.1985',
+                 }
+    endpoint = '/user'
+    response_d = requests.put(url=main_url + endpoint, json=json.dumps(user_dict))
+    print_respone(response_d)
+
+def delete_user():
+    params = {'id': '2'}
+    endpoint = '/user'
+    response = requests.delete(url=main_url + endpoint, params=params)
+    print_respone(response)
+
+
 if __name__ == '__main__':
     run_db()
-    get_user_by_id()
+    # get_user_by_id()
+    # query_users()
+    # create_user()
+    # query_users()
+    # update_user()
     query_users()
-    create_user()
+    delete_user()
     query_users()
