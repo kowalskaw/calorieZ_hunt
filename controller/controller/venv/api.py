@@ -2,35 +2,36 @@ from flask import Flask, request
 from controller import *
 
 app = Flask(__name__)
+
+# database management
 conn = None
 cursor = None
+users = None
 
 @app.route('/')
 def home():
-    global conn, cursor
+    global conn, cursor, users
     conn = sqlite3.connect("skrypt.db",  check_same_thread=False)
     cursor = conn.cursor()
-    return "Connecting to database"
+    # managing users
+    users = Users(conn, cursor)
+    return "Connection to database established. Necessary objects created."
 
 # pass a query later on
 @app.route('/users', methods=['GET'])
 def users():
     global conn, cursor
     if request.method == 'GET':
-        query1 = '''
-        SELECT * FROM Users where id=2 or id=3
-        '''
-        users = query_users(conn, cursor, query1)
-        return users
+        query = request.args.get('query')
+        queried_users = users.query_users(query)
+        return queried_users
 
 # params: id
 @app.route('/user', methods=['GET', 'POST', 'UPDATE', 'DELETE'])
 def user():
     if request.method == 'GET':
         id = int(request.args.get('id'))
-        print(id)
-        print(type(id))
-        user = get_user_by_id(conn, cursor, id)
+        user = users.get_user_by_id(id)
         return user
     elif request.method == 'POST':
         print('post request')
