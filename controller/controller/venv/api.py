@@ -1,5 +1,5 @@
 from flask import Flask, request
-from controller import *
+from users_controller import *
 
 app = Flask(__name__)
 
@@ -17,7 +17,7 @@ def home():
     users = Users(conn, cursor)
     return "Connection to database established. Necessary objects created."
 
-# pass a query later on
+#
 @app.route('/users', methods=['GET'])
 def users():
     global conn, cursor
@@ -34,7 +34,9 @@ def user():
         user = users.get_user_by_id(id)
         return user
     elif request.method == 'POST':
-        print('post request')
+        user_dict = request.get_json()
+        new_user_id = users.create_user(user_dict)
+        print('create user')
 
     elif request.method == 'UPDATE':
         print('update request')

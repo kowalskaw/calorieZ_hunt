@@ -1,19 +1,29 @@
 import sqlite3
 import json
 
-
 class Users:
     def __init__(self, conn, cursor):
         self.conn = conn
         self.cursor = cursor
 
+    # data as dict
     def create_user(self, user):
+        user_dict = json.loads(user)
+        list_of_values = []
+        for key in user_dict:
+            list_of_values.append(user_dict[key])
+
+        # to tuple
+        user_tuple = tuple(list_of_values)
+
         query = '''
         INSERT INTO Users(password, first_name, last_name, email, sex, weight,
-        height, alergies, caloriesIntakeDaily, weight_goal, user_name, birthDate)
+        height, allergies, calories_intake_daily, weight_goal, user_name, birthDate)
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
         '''
-        self.cursor.execute(query, user)
+
+        self.cursor.execute(query, user_tuple)
+
         return self.cursor.lastrowid  # lastrowid returns generated id
 
     def update_user(self, user):
@@ -27,7 +37,7 @@ class Users:
             weight = ?,
             height = ?, 
             alergies = ?, 
-            caloriesIntakeDaily = ?, 
+            calories_intake_daily = ?, 
             weight_goal = ?, 
             user_name = ?, 
             birthDate = ?
@@ -66,12 +76,13 @@ class Users:
 def test():
     conn = sqlite3.connect("skrypt.db")
     cursor = conn.cursor()
-
     users = Users(conn, cursor)
 
     user = users.get_user_by_id(3)
-
     print(user)
+
+
+
 
 
 if __name__ == '__main__':
