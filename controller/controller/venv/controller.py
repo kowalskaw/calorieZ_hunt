@@ -2,25 +2,17 @@ import sqlite3
 import json
 
 
-def connect_to_db(sqlite_file):
-    conn = None
-    conn = sqlite3.connect(sqlite_file)
-    # print("conected")
-    return conn
-
-
-def create_user(conn, user):
+def create_user(conn, cursor, user):
     query = '''
     INSERT INTO Users(password, first_name, last_name, email, sex, weight,
     height, alergies, caloriesIntakeDaily, weight_goal, user_name, birthDate)
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
     '''
-    cursor = conn.cursor()
     cursor.execute(query, user)
     return cursor.lastrowid  # lastrowid returns generated id
 
 
-def update_user(conn, user):
+def update_user(conn, cursor, user):
     query = '''
     UPDATE Users
     SET password = ?,
@@ -37,48 +29,44 @@ def update_user(conn, user):
         birthDate = ?
     WHERE id = ?
     '''
-    cursor = conn.cursor()
     cursor.execute(query, user)
 
 
-def delete_user(conn, id):
+def delete_user(conn, cursor, id):
     query = '''
     DELETE FROM Users where id=?
     '''
-    cursor = conn.cursor()
     cursor.execute(query, (id,))
     conn.commit()
 
 
-def delete_all_users(conn):
+def delete_all_users(conn, cursor):
     query = '''
     DELETE FROM Users
     '''
-    cursor = conn.cursor()
     cursor.execute(query)
     conn.commit()
 
 
-def query_users(conn, query):
+def query_users(conn, curosr, query):
     cursor = conn.cursor()
     cursor.execute(query)
     data = cursor.fetchall()
     return json.dumps(data)
 
 
-def get_user_by_id(conn, user_id):
+def get_user_by_id(conn, cursor, user_id):
     query = '''
     SELECT * FROM Users where id=?
     '''
-    cursor = conn.cursor()
     cursor.execute(query, (id,))
     data = cursor.fetchall()
     return json.dumps(data)
 
 
 def main():
-    database = "skrypt.db"
-    conn = connect_to_db(database)
+    conn = sqlite3.connect("skrypt.db")
+    cursor = conn.cursor()
     with conn:
         # creating user
         # user = ('root', 'marlenka', 'twojastara', 'marlenka@gmial.com',
@@ -107,10 +95,10 @@ def main():
         query2 = '''
         SELECT * FROM Users where id=1
         '''
-        result = query_users(conn, query1)
-        result2 = query_users(conn, query2)
+        result = query_users(conn, cursor, query1)
+        result2 = query_users(conn, cursor, query2)
 
         print(result)
 
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    main()
