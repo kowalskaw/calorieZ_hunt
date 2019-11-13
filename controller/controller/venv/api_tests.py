@@ -7,6 +7,7 @@ def run_db():
     response = requests.get(url=main_url + endpoint)
     print(response.content)
 
+
 def get_user_by_id():
     params = {'id' : '2'}
     endpoint = '/user'

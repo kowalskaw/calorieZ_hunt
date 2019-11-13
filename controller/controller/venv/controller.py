@@ -59,7 +59,7 @@ def get_user_by_id(conn, cursor, user_id):
     query = '''
     SELECT * FROM Users where id=?
     '''
-    cursor.execute(query, (id,))
+    cursor.execute(query, (user_id,))
     data = cursor.fetchall()
     return json.dumps(data)
 
@@ -95,10 +95,12 @@ def main():
         query2 = '''
         SELECT * FROM Users where id=1
         '''
-        result = query_users(conn, cursor, query1)
-        result2 = query_users(conn, cursor, query2)
+        # result = query_users(conn, cursor, query1)
+        # result2 = query_users(conn, cursor, query2)
+
+        result = get_user_by_id(conn, cursor, 2)
 
         print(result)
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
