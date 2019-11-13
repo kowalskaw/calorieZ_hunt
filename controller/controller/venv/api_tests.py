@@ -15,10 +15,14 @@ def run_db():
 
 
 def query_users():
-    q1 = '''
-    SELECT * FROM Users where id=2 or id=3
+    # q1 = '''
+    # SELECT * FROM Users where id=2 or id=3
+    # '''
+    q2 = '''
+    SELECT * FROM UsersFts WHERE allergies match 'gluten';
     '''
-    params = {'query' : q1}
+    # [w jakim miejscu występuje gluten, gluten]
+    params = {'query' : q2}
     endpoint = '/users'
     response = requests.get(url=main_url + endpoint, params=params)
     print_respone(response)
