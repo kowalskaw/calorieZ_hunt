@@ -19,7 +19,7 @@ def home():
     return "Connection to database established. Necessary objects created."
 
 
-# multiple users
+# multiple users -> GET with specified query, DELETE all users
 @app.route('/users', methods=['GET', 'DELETE'])
 def users():
     global conn, cursor
@@ -28,7 +28,9 @@ def users():
         queried_users = users.query_users(query)
         return queried_users
     if request.method == 'DELETE':
-        print('Delete request')
+        users.delete_all_users()
+        return 'All users deleted'
+
 
 # one user
 @app.route('/user', methods=['GET', 'POST', 'PUT', 'DELETE'])
