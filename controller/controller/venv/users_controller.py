@@ -1,6 +1,7 @@
 import sqlite3
 import json
 
+
 class Users:
     def __init__(self, conn, cursor):
         self.conn = conn
@@ -83,6 +84,22 @@ class Users:
         data = self.cursor.fetchall()
         return json.dumps(data)
 
+    def get_user_by_login(self, username):
+        query = '''
+        SELECT * FROM Users where user_name=?
+        '''
+        self.cursor.execute(query, (username,))
+        data = self.cursor.fetchall()
+        return json.dumps(data)
+
+    def get_user_by_email(self, email):
+        query = '''
+        SELECT * FROM Users where email=?
+        '''
+        self.cursor.execute(query, (email,))
+        data = self.cursor.fetchall()
+        return json.dumps(data)
+
 
 def test():
     conn = sqlite3.connect("skrypt.db")
@@ -91,6 +108,7 @@ def test():
 
     user = users.get_user_by_id(3)
     print(user)
+
 
 if __name__ == '__main__':
     test()

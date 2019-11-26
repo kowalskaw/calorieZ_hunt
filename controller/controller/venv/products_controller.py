@@ -75,6 +75,7 @@ class Products:
         data = self.cursor.fetchall()
         return json.dumps(data)
 
+    # check if it works
     def get_product_by_name(self, name):
         query = '''
         SELECT * FROM Products where name=?
@@ -83,7 +84,33 @@ class Products:
         data = self.cursor.fetchall()
         return json.dumps(data)
 
-    # don't know if it works
+    # check if it works
+    # wyszukiwanie produktów w danym posiłku po dacie i userze (id)
+    def get_product_by_user_id_and_date(self, user_id, date):
+        query = '''
+        SELECT p.name, p.protein, p.carbs, p.fats, p.allergens,
+         p.calories_in_100_grams, s.portionInGrams, m.meal_type
+        FROM Products p join
+        SpecificProductForMeal s on p.id = s.productId join
+        Meal m on m.id = s.mealId where
+        m.userId =? and m.date =? group by Products
+        '''
+
+        self.cursor.execute(query, (user_id, date,))
+        data = self.cursor.fetchall()
+        return json.dumps(data)
+
+    # check if it works
+    def get_product_by_name(self, name):
+        pattern = str(name) + '%'
+        query = '''
+        SELECT * FROM Products where name like ?
+        '''
+        self.cursor.execute(query, (pattern,))
+        data = self.cursor.fetchall()
+        return json.dumps(data)
+
+    # check if it works
     def get_product_with_no_given_allergens(self, allergens):
         query = '''
         SELECT * FROM Products WHERE allergens NOT MATCH ?;
