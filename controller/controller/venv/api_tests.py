@@ -42,17 +42,17 @@ def get_user_by_id():
 
 
 def create_user():
-    user_dict = {'password': 'supertajnehaslo',
-                 'first_name': 'Jadzia',
-                 'last_name': 'Marudka',
-                 'email': 'superjadzia@gmail.com',
+    user_dict = {'password': 'elo',
+                 'first_name': 'Blabla',
+                 'last_name': 'Marta',
+                 'email': 'dupadupa@gmail.com',
                  'sex': 0,
                  'weight': 60,
                  'height': 165,
                  'allergies': 'gluten laktoza',
                  'calories_intake_daily': 1900,
                  'weight_goal': 55,
-                 'user_name': 'JadziaMarudka85',
+                 'user_name': 'MArmalfdiyfhead',
                  'birthDate': '10.11.1985',
                  }
     endpoint = '/user'
@@ -80,7 +80,7 @@ def update_user():
     print_respone(response_d)
 
 def delete_user():
-    params = {'id': '2'}
+    params = {'id': '1'}
     endpoint = '/user'
     response = requests.delete(url=main_url + endpoint, params=params)
     print_respone(response)
@@ -91,12 +91,12 @@ if __name__ == '__main__':
 
     # users
 
-    get_user_by_id()
-    query_users()
+    # get_user_by_id()
+    # query_users()
     create_user()
-    query_users()
-    update_user()
-    query_users()
+    # query_users()
+    # update_user()
+    # query_users()
     # delete_user()
     # query_users()
 

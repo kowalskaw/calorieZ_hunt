@@ -82,6 +82,7 @@ class Users:
         '''
         self.cursor.execute(query, (user_id,))
         data = self.cursor.fetchall()
+
         return json.dumps(data)
 
     def get_user_by_login(self, username):

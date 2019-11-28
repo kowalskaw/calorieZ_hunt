@@ -46,7 +46,7 @@ def user():
     elif request.method == 'POST':
         user = request.get_json()
         new_user_id = users.create_user(user)
-        return new_user_id
+        return 'User created with id: ' + str(new_user_id)
     elif request.method == 'PUT':
         user = request.get_json()
         users.update_user(user)
