@@ -24,7 +24,7 @@ def query_users():
     q2 = '''
     SELECT * FROM UsersFts WHERE allergies match 'gluten';
     '''
-    q3 = q1 = '''
+    q3 = '''
     SELECT * FROM Users
     '''
     # [w jakim miejscu występuje gluten, gluten]
@@ -35,11 +35,22 @@ def query_users():
 
 
 def get_user_by_id():
-    params = {'id': '2'}
+    params = {'id': '4'}
     endpoint = '/user'
     response = requests.get(url=main_url + endpoint, params=params)
     print_respone(response)
 
+def get_user_by_username():
+    params = {'user_name': 'MadziaWesołek85'}
+    endpoint = '/user'
+    response = requests.get(url=main_url + endpoint, params=params)
+    print_respone(response)
+
+def get_user_by_email():
+    params = {'email': 'superjadzia@gmail.com'}
+    endpoint = '/user'
+    response = requests.get(url=main_url + endpoint, params=params)
+    print_respone(response)
 
 def create_user():
     user_dict = {'password': 'elo',
@@ -91,9 +102,11 @@ if __name__ == '__main__':
 
     # users
 
-    # get_user_by_id()
+    #get_user_by_id()
+    #get_user_by_email()
+    get_user_by_username()
     # query_users()
-    create_user()
+    # create_user()
     # query_users()
     # update_user()
     # query_users()

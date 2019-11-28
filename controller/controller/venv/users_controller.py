@@ -7,6 +7,41 @@ class Users:
         self.conn = conn
         self.cursor = cursor
 
+    def user_tuple_to_dict_withut_id(self, data):
+        user_as_dict = {
+            'password': [x[0] for x in data],
+            'first_name': [x[1] for x in data],
+            'last_name': [x[2] for x in data],
+            'email': [x[3] for x in data],
+            'sex': [x[4] for x in data],
+            'weight': [x[5] for x in data],
+            'height': [x[6] for x in data],
+            'allergies': [x[7] for x in data],
+            'calories_intake_daily': [x[8] for x in data],
+            'weight_goal': [x[9] for x in data],
+            'user_name': [x[10] for x in data],
+            'birthDate': [x[11] for x in data],
+        }
+        return user_as_dict
+
+    def user_tuple_to_dict_with_id(self, data):
+        user_as_dict = {
+            'id' : [x[0] for x in data],
+            'password': [x[1] for x in data],
+            'first_name': [x[2] for x in data],
+            'last_name': [x[3] for x in data],
+            'email': [x[4] for x in data],
+            'sex': [x[5] for x in data],
+            'weight': [x[6] for x in data],
+            'height': [x[7] for x in data],
+            'allergies': [x[8] for x in data],
+            'calories_intake_daily': [x[9] for x in data],
+            'weight_goal': [x[10] for x in data],
+            'user_name': [x[11] for x in data],
+            'birthDate': [x[12] for x in data],
+        }
+        return user_as_dict
+
     # data as dict
     def create_user(self, user):
         user_dict = json.loads(user)
@@ -24,6 +59,7 @@ class Users:
         '''
 
         self.cursor.execute(query, user_tuple)
+        self.conn.commit()
 
         return self.cursor.lastrowid  # lastrowid returns generated id
 
@@ -56,6 +92,7 @@ class Users:
         WHERE id = ?
         '''
         self.cursor.execute(query, user_tuple)
+        self.conn.commit()
 
     def delete_user(self, id):
         query = '''
@@ -82,16 +119,15 @@ class Users:
         '''
         self.cursor.execute(query, (user_id,))
         data = self.cursor.fetchall()
+        return json.dumps(self.user_tuple_to_dict_with_id(data))
 
-        return json.dumps(data)
-
-    def get_user_by_login(self, username):
+    def get_user_by_username(self, username):
         query = '''
         SELECT * FROM Users where user_name=?
         '''
         self.cursor.execute(query, (username,))
         data = self.cursor.fetchall()
-        return json.dumps(data)
+        return json.dumps(self.user_tuple_to_dict_with_id(data))
 
     def get_user_by_email(self, email):
         query = '''
@@ -99,7 +135,7 @@ class Users:
         '''
         self.cursor.execute(query, (email,))
         data = self.cursor.fetchall()
-        return json.dumps(data)
+        return json.dumps(self.user_tuple_to_dict_with_id(data))
 
 
 def test():
@@ -107,7 +143,7 @@ def test():
     cursor = conn.cursor()
     users = Users(conn, cursor)
 
-    user = users.get_user_by_id(3)
+    user = users.get_user_by_id(4)
     print(user)
 
 

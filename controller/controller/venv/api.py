@@ -40,8 +40,15 @@ def users():
 @app.route('/user', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def user():
     if request.method == 'GET':
-        id = int(request.args.get('id'))
-        user = users.get_user_by_id(id)
+        if request.args.get('id'):
+            id = int(request.args.get('id'))
+            user = users.get_user_by_id(id)
+        if request.args.get('user_name'):
+            username = request.args.get('user_name')
+            user = users.get_user_by_username(username)
+        if request.args.get('email'):
+            email = request.args.get('email')
+            user = users.get_user_by_email(email)
         return user
     elif request.method == 'POST':
         user = request.get_json()
