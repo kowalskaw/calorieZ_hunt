@@ -67,12 +67,21 @@ def user():
 
 
 # multiple products -> GET with specified query, DELETE all products
-@app.route('/products', methods=['GET', 'DELETE'])
+@app.route('/products', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def products():
     if request.method == 'GET':
-        query = request.args.get('query')
-        queried_products = products.query_products(query)
-        return queried_products
+        if request.args.get('query'):
+            query = request.args.get('query')
+            queried_products = products.query_products(query)
+            return queried_products
+        if request.args.get('partial_name'):
+            partial_name = request.args.get('partial_name')
+            queried_products = products.get_product_by_partial_name(partial_name)
+            return queried_products
+        if request.args.get('allergens'):
+            allergens = request.args.get('allergens')
+            queried_products = products.get_product_with_no_given_allergens(allergens)
+            return queried_products
     elif request.method == 'DELETE':
         products.delete_all_products()
         return 'All products deleted'
@@ -84,21 +93,31 @@ def products():
 @app.route('/product', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def product():
     if request.method == 'GET':
-        id = int(request.args.get('id'))
-        product = products.get_product_by_id(id)
-        return product
+        if request.args.get('id'):
+            id = int(request.args.get('id'))
+            product = products.get_product_by_id(id)
+            return product
+        if request.args.get('name'):
+            name = request.args.get('name')
+            product = products.get_product_by_name(name)
+            return product
     elif request.method == 'POST':
         product = request.get_json()
         new_product_id = products.create_product(product)
-        return new_product_id
+        return 'New product created with id: ' + str(new_product_id)
     elif request.method == 'PUT':
         product = request.get_json()
         products.update_product(product)
         return 'Product updated'
     elif request.method == 'DELETE':
-        id = int(request.args.get('id'))
-        product = products.delete_product(id)
-        return 'Product with id ' + str(id) + ' deleted from db'
+        if request.args.get('name'):
+            name = request.args.get('name')
+            product = products.delete_product_by_name(name)
+            return 'Product with name ' + name + ' deleted from db'
+        if request.args.get('id'):
+            id = request.args.get('id')
+            product = products.delete_product(id)
+            return 'Product with id ' + str(id) + ' deleted from db'
     else:
         return 'Invalid request'
 

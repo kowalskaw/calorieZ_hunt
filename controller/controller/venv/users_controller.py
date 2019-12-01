@@ -27,7 +27,7 @@ class Users:
     def user_tuple_to_dict_with_id(self, data):
         print(data)
         user_as_dict = {
-            'id' : [x[0] for x in data],
+            'id': [x[0] for x in data],
             'password': [x[1] for x in data],
             'first_name': [x[2] for x in data],
             'last_name': [x[3] for x in data],
@@ -166,26 +166,27 @@ def test():
     users = Users(conn, cursor)
 
     u = {
-            'password': 'maslo',
-            'first_name': 'Jolanta',
-            'last_name': 'Marcepanek',
-            'email': 'jola245@wp.pl',
-            'sex': 0,
-            'weight': 60,
-            'height': 165,
-            'allergies': 'gluten',
-            'calories_intake_daily': 2000,
-            'weight_goal': 57,
-            'user_name': 'twoja_jola',
-            'birthDate': '1.02.2000',
-        }
+        'password': 'maslo',
+        'first_name': 'Jolanta',
+        'last_name': 'Marcepanek',
+        'email': 'jola245@wp.pl',
+        'sex': 0,
+        'weight': 60,
+        'height': 165,
+        'allergies': 'gluten',
+        'calories_intake_daily': 2000,
+        'weight_goal': 57,
+        'user_name': 'twoja_jola',
+        'birthDate': '1.02.2000',
+    }
 
     user = users.get_user_by_id(5)
-    #users.create_user(json.dumps(u))
-    #print(user)
+    # users.create_user(json.dumps(u))
+    # print(user)
     jola = users.get_user_by_username('twoja_jola')
-    #print(jola)
-    #users.delete_user(8)
+    # print(jola)
+    # users.delete_user(8)
+
 
 if __name__ == '__main__':
     test()

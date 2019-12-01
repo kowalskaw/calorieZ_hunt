@@ -1,84 +1,71 @@
 import requests
 import json
-from api_users_tests import print_respone, run_db, main_ur
+from api_users_tests import print_respone, run_db, main_url
 
 
-def query_users():
-    q1 = '''
-    SELECT * FROM Users where id=2 or id=3
-    '''
-    q2 = '''
-    SELECT * FROM UsersFts WHERE allergies match 'gluten';
-    '''
-    q3 = '''
-    SELECT * FROM Users
-    '''
-    # [w jakim miejscu występuje gluten, gluten]
-    params = {'query': q3}
-    endpoint = '/users'
+def get_product_by_id():
+    params = {'id': '39'}
+    endpoint = '/product'
     response = requests.get(url=main_url + endpoint, params=params)
     print_respone(response)
 
 
-def get_user_by_id():
-    params = {'id': '4'}
-    endpoint = '/user'
+def get_product_by_name():
+    params = {'name': 'chlepek'}
+    endpoint = '/product'
     response = requests.get(url=main_url + endpoint, params=params)
     print_respone(response)
 
-def get_user_by_username():
-    params = {'user_name': 'MadziaWesołek85'}
-    endpoint = '/user'
+
+def get_product_by_partial_name():
+    params = {'partial_name': 'pap'}
+    endpoint = '/products'
     response = requests.get(url=main_url + endpoint, params=params)
     print_respone(response)
 
-def get_user_by_email():
-    params = {'email': 'superjadzia@gmail.com'}
-    endpoint = '/user'
-    response = requests.get(url=main_url + endpoint, params=params)
-    print_respone(response)
 
-def create_user():
-    user_dict = {'password': 'elo',
-                 'first_name': 'Blabla',
-                 'last_name': 'Marta',
-                 'email': 'dupadupa@gmail.com',
-                 'sex': 0,
-                 'weight': 60,
-                 'height': 165,
-                 'allergies': 'gluten laktoza',
-                 'calories_intake_daily': 1900,
-                 'weight_goal': 55,
-                 'user_name': 'MArmalfdiyfhead',
-                 'birthDate': '10.11.1985',
-                 }
-    endpoint = '/user'
-    response_d = requests.post(url=main_url + endpoint, json=json.dumps(user_dict))
+def create_product():
+    p1 = {
+        'name': 'maselko',
+        'calories_in_100_grams': 746,
+        'protein': 1,
+        'carbs': 1,
+        'fats': 82,
+        'one_portion_in_grams': 5,
+        'user_id': 4,
+        'allergens': 'laktoza',
+    }
+    endpoint = '/product'
+    response_d = requests.post(url=main_url + endpoint, json=json.dumps(p1))
     print_respone(response_d)
 
 
-def update_user():
-    user_dict = {'password': 'supertajnehaslo',
-                 'first_name': 'Magdalena',
-                 'last_name': 'Wesoła',
-                 'email': 'superjadzia@gmail.com',
-                 'sex': 0,
-                 'weight': 60,
-                 'height': 165,
-                 'allergies': 'gluten laktoza',
-                 'calories_intake_daily': 1900,
-                 'weight_goal': 55,
-                 'user_name': 'MadziaWesołek85',
-                 'birthDate': '10.11.1985',
-                 'id' : 4
-                 }
-    endpoint = '/user'
-    response_d = requests.put(url=main_url + endpoint, json=json.dumps(user_dict))
+def update_product():
+    p1 = {
+        'id': 46,
+        'name': 'maselko',
+        'calories_in_100_grams': 746,
+        'protein': 1,
+        'carbs': 1,
+        'fats': 82,
+        'one_portion_in_grams': 10,
+        'user_id': 4,
+        'allergens': 'laktoza',
+    }
+    endpoint = '/product'
+    response_d = requests.put(url=main_url + endpoint, json=json.dumps(p1))
     print_respone(response_d)
 
-def delete_user():
-    params = {'id': '1'}
-    endpoint = '/user'
+
+def delete_product_by_name():
+    params = {'name': 'maselko'}
+    endpoint = '/product'
+    response = requests.delete(url=main_url + endpoint, params=params)
+    print_respone(response)
+
+def delete_product_by_id():
+    params = {'id': '45'}
+    endpoint = '/product'
     response = requests.delete(url=main_url + endpoint, params=params)
     print_respone(response)
 
@@ -86,17 +73,14 @@ def delete_user():
 if __name__ == '__main__':
     run_db()
 
-    #get_user_by_id()
-    #get_user_by_email()
-    get_user_by_username()
-    # query_users()
-    # create_user()
-    # query_users()
-    # update_user()
-    # query_users()
-    # delete_user()
-    # query_users()
+    # create_product()
+    # get_product_by_partial_name()
+    # get_product_by_id()
+    # get_product_by_name()
+    # delete_product_by_name()
 
-    # products
+    # create_product()
+    # delete_product_by_id()
 
-    # ...
+    # create_product()
+    # update_product()

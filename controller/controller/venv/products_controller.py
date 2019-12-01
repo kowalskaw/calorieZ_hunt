@@ -48,7 +48,7 @@ class Products:
             if key != 'id':
                 list_of_values.append(dict_obj[key])
 
-        list_of_values.append(dict['id'])
+        list_of_values.append(dict_obj['id'])
         return tuple(list_of_values)
 
     def create_product(self, product):
@@ -209,5 +209,5 @@ def test():
     print(products.get_product_with_no_given_allergens('gluten'))
 
 
-if __name__ == '__main__':
-    test()
+# if __name__ == '__main__':
+#     test()
