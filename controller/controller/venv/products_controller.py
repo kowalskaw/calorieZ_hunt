@@ -22,7 +22,7 @@ class Products:
 
     def user_tuple_to_dict_with_id(self, data):
         product_as_dict = {
-            'id' : [x[0] for x in data],
+            'id': [x[0] for x in data],
             'name': [x[1] for x in data],
             'calories_in_100_grams': [x[2] for x in data],
             'protein': [x[3] for x in data],
@@ -118,7 +118,6 @@ class Products:
         data = self.cursor.fetchall()
         return json.dumps(self.user_tuple_to_dict_with_id(data))
 
-    # check if it works
     def get_product_by_name(self, name):
         query = '''
         SELECT * FROM Products where name=?
@@ -127,9 +126,7 @@ class Products:
         data = self.cursor.fetchall()
         return json.dumps(self.user_tuple_to_dict_with_id(data))
 
-
-    # check if it works
-    # wyszukiwanie produktów w danym posiłku po dacie i userze (id)
+    # not works
     def get_product_by_user_id_and_date(self, user_id, date):
         query = '''
         SELECT p.name, p.protein, p.carbs, p.fats, p.allergens,
@@ -144,8 +141,6 @@ class Products:
         data = self.cursor.fetchall()
         return json.dumps(self.user_tuple_to_dict_with_id(data))
 
-
-    # check if it works
     def get_product_by_partial_name(self, name):
         pattern = str(name) + '%'
         query = '''
@@ -155,7 +150,7 @@ class Products:
         data = self.cursor.fetchall()
         return json.dumps(self.user_tuple_to_dict_with_id(data))
 
-    # check if it works
+    # not works
     def get_product_with_no_given_allergens(self, allergens):
         query = '''
         SELECT * FROM Products WHERE allergens NOT MATCH ?;
@@ -172,15 +167,15 @@ def test():
 
     products = Products(conn, cursor)
     p1 = {
-            'name': 'paprika',
-            'calories_in_100_grams': 50,
-            'protein': 1,
-            'carbs': 3,
-            'fats': 1,
-            'one_portion_in_grams': 25,
-            'user_id': 4,
-            'allergens': '',
-        }
+        'name': 'paprika',
+        'calories_in_100_grams': 50,
+        'protein': 1,
+        'carbs': 3,
+        'fats': 1,
+        'one_portion_in_grams': 25,
+        'user_id': 4,
+        'allergens': '',
+    }
 
     p2 = {
         'name': 'chlepek',
@@ -201,11 +196,17 @@ def test():
     # products.delete_product_by_name('chlepek')
     # products.delete_product_by_name('paprika')
 
-    # GETTING PRODUCT
+    # GETTING PRODUCT BY NAME
     print(products.get_product_by_name('chlepek'))
     print(products.get_product_by_name('paprika'))
-
-
+    # GETTING PRODUCT BY ID
+    print(products.get_product_by_id(39))
+    # GETTING PRODUCT BY PARTIAL NAME
+    print(products.get_product_by_partial_name('pa'))
+    # GETTING PRODUCT BY USER ID AND DATE - nie działa!
+    print(products.get_product_by_user_id_and_date(4, '01.12.2019'))
+    # GETTING PRODUTS WITH NO GIVEN ALLERGENS - nie działa!
+    print(products.get_product_with_no_given_allergens('gluten'))
 
 
 if __name__ == '__main__':
