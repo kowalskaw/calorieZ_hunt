@@ -34,33 +34,24 @@ class Products:
         }
         return product_as_dict
 
-    def json_to_tuple_without_id(self, json):
-        dict = json.loads(json)
+    def json_to_tuple_without_id(self, json_obj):
+        dict_obj = json.loads(json_obj)
         list_of_values = []
-        for key in dict:
-            list_of_values.append(dict[key])
-        tuple = tuple(list_of_values)
-        return tuple
+        for key in dict_obj:
+            list_of_values.append(dict_obj[key])
+        return tuple(list_of_values)
 
-    def json_to_tuple_with_id(self, json):
-        dict = json.loads(json)
+    def json_to_tuple_with_id(self, json_obj):
+        dict_obj = json.loads(json_obj)
         list_of_values = []
-        for key in dict:
+        for key in dict_obj:
             if key != 'id':
-                list_of_values.append(dict[key])
+                list_of_values.append(dict_obj[key])
 
         list_of_values.append(dict['id'])
-        tuple = tuple(list_of_values)
-        return tuple
+        return tuple(list_of_values)
 
     def create_product(self, product):
-        # product_dict = json.loads(product)
-        # list_of_values = []
-        # for key in product_dict:
-        #     list_of_values.append(product_dict[key])
-        # # to tuple
-        # product_tuple = tuple(list_of_values)
-
         product_tuple = self.json_to_tuple_without_id(product)
 
         query = '''
@@ -75,14 +66,6 @@ class Products:
         return self.cursor.lastrowid  # lastrowid returns generated id
 
     def update_product(self, product):
-        # product_dict = json.loads(product)
-        # list_of_values = []
-        # for key in product_dict:
-        #     list_of_values.append(product_dict[key])
-        # list_of_values.append(product_dict['id'])
-        # # to tuple
-        # product_tuple = tuple(list_of_values)
-
         product_tuple = self.json_to_tuple_with_id(product)
 
         query = '''
@@ -108,6 +91,13 @@ class Products:
         self.cursor.execute(query, (id,))
         self.conn.commit()
 
+    def delete_product_by_name(self, name):
+        query = '''
+        DELETE FROM Products where name=?
+        '''
+        self.cursor.execute(query, (name,))
+        self.conn.commit()
+
     def delete_all_products(self):
         query = '''
         DELETE FROM Products
@@ -118,7 +108,7 @@ class Products:
     def query_products(self, query):
         self.cursor.execute(query)
         data = self.cursor.fetchall()
-        return json.dumps(data)
+        return json.dumps(self.user_tuple_to_dict_with_id(tuple))
 
     def get_product_by_id(self, id):
         query = '''
@@ -126,7 +116,7 @@ class Products:
         '''
         self.cursor.execute(query, (id,))
         data = self.cursor.fetchall()
-        return json.dumps(data)
+        return json.dumps(self.user_tuple_to_dict_with_id(data))
 
     # check if it works
     def get_product_by_name(self, name):
@@ -135,7 +125,8 @@ class Products:
         '''
         self.cursor.execute(query, (name,))
         data = self.cursor.fetchall()
-        return json.dumps(data)
+        return json.dumps(self.user_tuple_to_dict_with_id(data))
+
 
     # check if it works
     # wyszukiwanie produktów w danym posiłku po dacie i userze (id)
@@ -151,17 +142,18 @@ class Products:
 
         self.cursor.execute(query, (user_id, date,))
         data = self.cursor.fetchall()
-        return json.dumps(data)
+        return json.dumps(self.user_tuple_to_dict_with_id(data))
+
 
     # check if it works
-    def get_product_by_name(self, name):
+    def get_product_by_partial_name(self, name):
         pattern = str(name) + '%'
         query = '''
         SELECT * FROM Products where name like ?
         '''
         self.cursor.execute(query, (pattern,))
         data = self.cursor.fetchall()
-        return json.dumps(data)
+        return json.dumps(self.user_tuple_to_dict_with_id(data))
 
     # check if it works
     def get_product_with_no_given_allergens(self, allergens):
@@ -170,7 +162,8 @@ class Products:
         '''
         self.cursor.execute(query, (allergens,))
         data = self.cursor.fetchall()
-        return json.dumps(data)
+
+        return json.dumps(self.user_tuple_to_dict_with_id(data))
 
 
 def test():
@@ -178,8 +171,41 @@ def test():
     cursor = conn.cursor()
 
     products = Products(conn, cursor)
+    p1 = {
+            'name': 'paprika',
+            'calories_in_100_grams': 50,
+            'protein': 1,
+            'carbs': 3,
+            'fats': 1,
+            'one_portion_in_grams': 25,
+            'user_id': 4,
+            'allergens': '',
+        }
 
-    # test methods when dump data in db
+    p2 = {
+        'name': 'chlepek',
+        'calories_in_100_grams': 238,
+        'protein': 6.15,
+        'carbs': 50,
+        'fats': 1.20,
+        'one_portion_in_grams': 35,
+        'user_id': 4,
+        'allergens': 'gluten',
+    }
+
+    # ADDING PRODUCT
+    # products.create_product(json.dumps(p1))
+    # products.create_product(json.dumps(p2))
+
+    # DELETING PRODUCT
+    # products.delete_product_by_name('chlepek')
+    # products.delete_product_by_name('paprika')
+
+    # GETTING PRODUCT
+    print(products.get_product_by_name('chlepek'))
+    print(products.get_product_by_name('paprika'))
+
+
 
 
 if __name__ == '__main__':

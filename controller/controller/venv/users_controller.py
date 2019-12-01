@@ -25,6 +25,7 @@ class Users:
         return user_as_dict
 
     def user_tuple_to_dict_with_id(self, data):
+        print(data)
         user_as_dict = {
             'id' : [x[0] for x in data],
             'password': [x[1] for x in data],
@@ -42,25 +43,22 @@ class Users:
         }
         return user_as_dict
 
-    def json_to_tuple_without_id(self, json):
-        dict = json.loads(json)
+    def json_to_tuple_without_id(self, json_obj):
+        dict_obj = json.loads(json_obj)
         list_of_values = []
-        for key in dict:
-            list_of_values.append(dict[key])
-        # to tuple
-        tuple = tuple(list_of_values)
-        return tuple
+        for key in dict_obj:
+            list_of_values.append(dict_obj[key])
+        return tuple(list_of_values)
 
-    def json_to_tuple_with_id(self, json):
-        dict = json.loads(json)
+    def json_to_tuple_with_id(self, json_obj):
+        dict_obj = json.loads(json_obj)
         list_of_values = []
-        for key in dict:
+        for key in dict_obj:
             if key != 'id':
-                list_of_values.append(dict[key])
+                list_of_values.append(dict_obj[key])
 
         list_of_values.append(dict['id'])
-        tuple = tuple(list_of_values)
-        return tuple
+        return tuple(list_of_values)
 
     # data as dict
     def create_user(self, user):
@@ -167,9 +165,27 @@ def test():
     cursor = conn.cursor()
     users = Users(conn, cursor)
 
-    user = users.get_user_by_id(4)
-    print(user)
+    u = {
+            'password': 'maslo',
+            'first_name': 'Jolanta',
+            'last_name': 'Marcepanek',
+            'email': 'jola245@wp.pl',
+            'sex': 0,
+            'weight': 60,
+            'height': 165,
+            'allergies': 'gluten',
+            'calories_intake_daily': 2000,
+            'weight_goal': 57,
+            'user_name': 'twoja_jola',
+            'birthDate': '1.02.2000',
+        }
 
+    user = users.get_user_by_id(5)
+    #users.create_user(json.dumps(u))
+    #print(user)
+    jola = users.get_user_by_username('twoja_jola')
+    #print(jola)
+    #users.delete_user(8)
 
 if __name__ == '__main__':
     test()
