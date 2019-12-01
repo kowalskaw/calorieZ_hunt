@@ -100,8 +100,6 @@ def delete_user():
 if __name__ == '__main__':
     run_db()
 
-    # users
-
     #get_user_by_id()
     #get_user_by_email()
     get_user_by_username()
@@ -113,6 +111,3 @@ if __name__ == '__main__':
     # delete_user()
     # query_users()
 
-    # products
-
-    # ...

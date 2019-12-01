@@ -42,15 +42,37 @@ class Users:
         }
         return user_as_dict
 
+    def json_to_tuple_without_id(self, json):
+        dict = json.loads(json)
+        list_of_values = []
+        for key in dict:
+            list_of_values.append(dict[key])
+        # to tuple
+        tuple = tuple(list_of_values)
+        return tuple
+
+    def json_to_tuple_with_id(self, json):
+        dict = json.loads(json)
+        list_of_values = []
+        for key in dict:
+            if key != 'id':
+                list_of_values.append(dict[key])
+
+        list_of_values.append(dict['id'])
+        tuple = tuple(list_of_values)
+        return tuple
+
     # data as dict
     def create_user(self, user):
-        user_dict = json.loads(user)
-        list_of_values = []
-        for key in user_dict:
-            list_of_values.append(user_dict[key])
+        # user_dict = json.loads(user)
+        # list_of_values = []
+        # for key in user_dict:
+        #     list_of_values.append(user_dict[key])
+        #
+        # # to tuple
+        # user_tuple = tuple(list_of_values)
 
-        # to tuple
-        user_tuple = tuple(list_of_values)
+        user_tuple = self.json_to_tuple_without_id(user)
 
         query = '''
         INSERT INTO Users(password, first_name, last_name, email, sex, weight,
@@ -64,16 +86,18 @@ class Users:
         return self.cursor.lastrowid  # lastrowid returns generated id
 
     def update_user(self, user):
-        user_dict = json.loads(user)
-        list_of_values = []
-        for key in user_dict:
-            if key != 'id':
-                list_of_values.append(user_dict[key])
+        # user_dict = json.loads(user)
+        # list_of_values = []
+        # for key in user_dict:
+        #     if key != 'id':
+        #         list_of_values.append(user_dict[key])
+        #
+        # list_of_values.append(user_dict['id'])
+        #
+        # # to tuple
+        # user_tuple = tuple(list_of_values)
 
-        list_of_values.append(user_dict['id'])
-
-        # to tuple
-        user_tuple = tuple(list_of_values)
+        user_tuple = self.json_to_tuple_with_id(user)
 
         query = '''
         UPDATE Users
