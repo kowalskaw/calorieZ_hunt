@@ -78,10 +78,15 @@ def products():
             partial_name = request.args.get('partial_name')
             queried_products = products.get_product_by_partial_name(partial_name)
             return queried_products
+        if request.args.get('user_id') and request.args.get('date'):
+            user_id = request.args.get('user_id')
+            date = request.args.get('date')
+            product = products.get_product_by_user_id_and_date(user_id, date)
+            return product
         if request.args.get('allergens'):
             allergens = request.args.get('allergens')
-            queried_products = products.get_product_with_no_given_allergens(allergens)
-            return queried_products
+            product = products.get_product_with_no_given_allergens(allergens)
+            return product
     elif request.method == 'DELETE':
         products.delete_all_products()
         return 'All products deleted'

@@ -8,31 +8,37 @@ class Products:
         self.cursor = cursor
 
     def product_tuple_to_dict_without_id(self, data):
-        product_as_dict = {
-            'name': [x[0] for x in data],
-            'calories_in_100_grams': [x[1] for x in data],
-            'protein': [x[2] for x in data],
-            'carbs': [x[3] for x in data],
-            'fats': [x[4] for x in data],
-            'one_portion_in_grams': [x[5] for x in data],
-            'user_id': [x[6] for x in data],
-            'allergens': [x[7] for x in data],
-        }
-        return product_as_dict
+        list_of_jsons = []
+        for one_tuple in data:
+            product_as_dict = {
+                'name': one_tuple[0],
+                'calories_in_100_grams': one_tuple[1],
+                'protein': one_tuple[2],
+                'carbs': one_tuple[3],
+                'fats': one_tuple[4],
+                'one_portion_in_grams': one_tuple[5],
+                'user_id': one_tuple[6],
+                'allergens': one_tuple[7],
+            }
+            list_of_jsons.append(product_as_dict)
+        return list_of_jsons
 
     def user_tuple_to_dict_with_id(self, data):
-        product_as_dict = {
-            'id': [x[0] for x in data],
-            'name': [x[1] for x in data],
-            'calories_in_100_grams': [x[2] for x in data],
-            'protein': [x[3] for x in data],
-            'carbs': [x[4] for x in data],
-            'fats': [x[5] for x in data],
-            'one_portion_in_grams': [x[6] for x in data],
-            'user_id': [x[7] for x in data],
-            'allergens': [x[8] for x in data],
-        }
-        return product_as_dict
+        list_of_jsons = []
+        for one_tuple in data:
+            product_as_dict = {
+                'id': one_tuple[0],
+                'name': one_tuple[1],
+                'calories_in_100_grams': one_tuple[2],
+                'protein': one_tuple[3],
+                'carbs': one_tuple[4],
+                'fats': one_tuple[5],
+                'one_portion_in_grams': one_tuple[6],
+                'user_id': one_tuple[7],
+                'allergens': one_tuple[8],
+            }
+            list_of_jsons.append(product_as_dict)
+        return list_of_jsons
 
     def json_to_tuple_without_id(self, json_obj):
         dict_obj = json.loads(json_obj)
@@ -54,16 +60,26 @@ class Products:
     def create_product(self, product):
         product_tuple = self.json_to_tuple_without_id(product)
 
-        query = '''
-        INSERT INTO Products(name, calories_in_100_grams, protein, carbs, fats,
-        one_portion_in_grams, user_id, allergens)
-        VALUES (?,?,?,?,?,?,?,?)
+        check_if_exists_query ='''
+        SELECT * FROM Products where name = ?
         '''
 
-        self.cursor.execute(query, product_tuple)
-        self.conn.commit()
+        self.cursor.execute(check_if_exists_query, (product_tuple[0],))
+        data = self.cursor.fetchall()
 
-        return self.cursor.lastrowid  # lastrowid returns generated id
+        if data == []:
+            query = '''
+            INSERT INTO Products(name, calories_in_100_grams, protein, carbs, fats,
+            one_portion_in_grams, user_id, allergens)
+            VALUES (?,?,?,?,?,?,?,?)
+            '''
+
+            self.cursor.execute(query, product_tuple)
+            self.conn.commit()
+
+            return self.cursor.lastrowid  # lastrowid returns generated id
+        else:
+            return 'Product already exists in db'
 
     def update_product(self, product):
         product_tuple = self.json_to_tuple_with_id(product)
@@ -126,21 +142,6 @@ class Products:
         data = self.cursor.fetchall()
         return json.dumps(self.user_tuple_to_dict_with_id(data))
 
-    # not works
-    def get_product_by_user_id_and_date(self, user_id, date):
-        query = '''
-        SELECT p.name, p.protein, p.carbs, p.fats, p.allergens,
-         p.calories_in_100_grams, s.portionInGrams, m.meal_type
-        FROM Products p join
-        SpecificProductForMeal s on p.id = s.productId join
-        Meal m on m.id = s.mealId where
-        m.userId =? and m.date =? group by Products
-        '''
-
-        self.cursor.execute(query, (user_id, date,))
-        data = self.cursor.fetchall()
-        return json.dumps(self.user_tuple_to_dict_with_id(data))
-
     def get_product_by_partial_name(self, name):
         pattern = str(name) + '%'
         query = '''
@@ -151,9 +152,26 @@ class Products:
         return json.dumps(self.user_tuple_to_dict_with_id(data))
 
     # not works
+    def get_product_by_user_id_and_date(self, user_id, date):
+        query = '''
+        Select p.name, p.protein, p.carbs, p.fats,
+        p.allergens, p.calories_in_100_grams, s.portionInGrams, m.meal_type
+        from Products p join SpecificProductForMeal s
+        on p.id = s.productId join
+        Meal m on m.id = s.mealId 
+        where m.user_id=? and 
+        m.date = ? group by p.id;
+        '''
+
+        self.cursor.execute(query, (user_id, date,))
+        data = self.cursor.fetchall()
+        return json.dumps(self.user_tuple_to_dict_with_id(data))
+
+    # not works
     def get_product_with_no_given_allergens(self, allergens):
         query = '''
-        SELECT * FROM Products WHERE allergens NOT MATCH ?;
+        Select * from Products where id != 
+        (SELECT id FROM ProductsFts WHERE allergens match ?);
         '''
         self.cursor.execute(query, (allergens,))
         data = self.cursor.fetchall()
@@ -197,17 +215,16 @@ def test():
     # products.delete_product_by_name('paprika')
 
     # GETTING PRODUCT BY NAME
-    print(products.get_product_by_name('chlepek'))
-    print(products.get_product_by_name('paprika'))
+    # print(products.get_product_by_name('chlepek'))
+    #print(products.get_product_by_name('paprika'))
     # GETTING PRODUCT BY ID
-    print(products.get_product_by_id(39))
+    # print(products.get_product_by_id(39))
     # GETTING PRODUCT BY PARTIAL NAME
-    print(products.get_product_by_partial_name('pa'))
+    # print(products.get_product_by_partial_name('pa'))
     # GETTING PRODUCT BY USER ID AND DATE - nie działa!
-    print(products.get_product_by_user_id_and_date(4, '01.12.2019'))
+    # print(products.get_product_by_user_id_and_date(4, '01.12.2019'))
     # GETTING PRODUTS WITH NO GIVEN ALLERGENS - nie działa!
-    print(products.get_product_with_no_given_allergens('gluten'))
-
+    # print(products.get_product_with_no_given_allergens('gluten'))
 
 # if __name__ == '__main__':
 #     test()
