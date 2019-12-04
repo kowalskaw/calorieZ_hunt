@@ -8,40 +8,45 @@ class Users:
         self.cursor = cursor
 
     def user_tuple_to_dict_withut_id(self, data):
-        user_as_dict = {
-            'password': [x[0] for x in data],
-            'first_name': [x[1] for x in data],
-            'last_name': [x[2] for x in data],
-            'email': [x[3] for x in data],
-            'sex': [x[4] for x in data],
-            'weight': [x[5] for x in data],
-            'height': [x[6] for x in data],
-            'allergies': [x[7] for x in data],
-            'calories_intake_daily': [x[8] for x in data],
-            'weight_goal': [x[9] for x in data],
-            'user_name': [x[10] for x in data],
-            'birthDate': [x[11] for x in data],
-        }
-        return user_as_dict
+        list_of_jsons = []
+        for one_tuple in data:
+            user_as_dict = {
+                'password': one_tuple[0],
+                'first_name': one_tuple[1],
+                'last_name': one_tuple[2],
+                'email': one_tuple[3],
+                'sex': one_tuple[4],
+                'weight': one_tuple[5],
+                'height': one_tuple[6],
+                'allergies': one_tuple[7],
+                'calories_intake_daily': one_tuple[8],
+                'weight_goal': one_tuple[9],
+                'user_name': one_tuple[10],
+                'birthDate': one_tuple[11],
+            }
+            list_of_jsons.append(user_as_dict)
+        return list_of_jsons
 
     def user_tuple_to_dict_with_id(self, data):
-        print(data)
-        user_as_dict = {
-            'id': [x[0] for x in data],
-            'password': [x[1] for x in data],
-            'first_name': [x[2] for x in data],
-            'last_name': [x[3] for x in data],
-            'email': [x[4] for x in data],
-            'sex': [x[5] for x in data],
-            'weight': [x[6] for x in data],
-            'height': [x[7] for x in data],
-            'allergies': [x[8] for x in data],
-            'calories_intake_daily': [x[9] for x in data],
-            'weight_goal': [x[10] for x in data],
-            'user_name': [x[11] for x in data],
-            'birthDate': [x[12] for x in data],
-        }
-        return user_as_dict
+        list_of_jsons = []
+        for one_tuple in data:
+            user_as_dict = {
+                'id': one_tuple[0],
+                'password': one_tuple[1],
+                'first_name': one_tuple[2],
+                'last_name': one_tuple[3],
+                'email': one_tuple[4],
+                'sex': one_tuple[5],
+                'weight': one_tuple[6],
+                'height': one_tuple[7],
+                'allergies': one_tuple[8],
+                'calories_intake_daily': one_tuple[9],
+                'weight_goal': one_tuple[10],
+                'user_name': one_tuple[11],
+                'birthDate': one_tuple[12],
+            }
+            list_of_jsons.append(user_as_dict)
+        return list_of_jsons
 
     def json_to_tuple_without_id(self, json_obj):
         dict_obj = json.loads(json_obj)
@@ -166,27 +171,26 @@ def test():
     users = Users(conn, cursor)
 
     u = {
-        'password': 'maslo',
-        'first_name': 'Jolanta',
-        'last_name': 'Marcepanek',
-        'email': 'jola245@wp.pl',
+        'password': 'twja stara',
+        'first_name': 'Twoja',
+        'last_name': 'Stara',
+        'email': 'twojastara@wp.pl',
         'sex': 0,
         'weight': 60,
         'height': 165,
         'allergies': 'gluten',
         'calories_intake_daily': 2000,
         'weight_goal': 57,
-        'user_name': 'twoja_jola',
-        'birthDate': '1.02.2000',
+        'user_name': 'twoja_stara123',
+        'birthDate': '1.02.1999',
     }
 
-    user = users.get_user_by_id(5)
-    # users.create_user(json.dumps(u))
-    # print(user)
+    print(users.get_user_by_id(5))
+    users.create_user(json.dumps(u))
     jola = users.get_user_by_username('twoja_jola')
-    # print(jola)
+    print(jola)
     # users.delete_user(8)
 
 
-if __name__ == '__main__':
-    test()
+# if __name__ == '__main__':
+#     test()

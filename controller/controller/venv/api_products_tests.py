@@ -23,6 +23,18 @@ def get_product_by_partial_name():
     response = requests.get(url=main_url + endpoint, params=params)
     print_respone(response)
 
+def get_product_with_no_allergens():
+    params = {'allergens': 'gluten'}
+    endpoint = '/products'
+    response = requests.get(url=main_url + endpoint, params=params)
+    print_respone(response)
+
+def get_product_by_user_id_date():
+    params = {'user_id': '4',
+              'date' : '01.12.2019'}
+    endpoint = '/products'
+    response = requests.get(url=main_url + endpoint, params=params)
+    print_respone(response)
 
 def create_product():
     p1 = {
@@ -84,3 +96,7 @@ if __name__ == '__main__':
 
     # create_product()
     # update_product()
+
+    get_product_by_user_id_date()
+    get_product_with_no_allergens()
+
