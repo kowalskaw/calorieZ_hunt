@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -20,13 +18,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.DataBaseHandler;
-import com.example.myapplication.LoginActivity;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.Product;
 import com.example.myapplication.R;
 import com.example.myapplication.SearchProductInDatabaseActivity;
 import com.example.myapplication.User;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
@@ -150,14 +146,14 @@ public class DashboardFragment extends Fragment {
     }
 
     private void calculateAllCaloriesValuesForDay(User user){
-        maxCaloriesIntakeValue.setText(user.getUserCaloriesIntakeDaily().toString());
-        Integer breakfast = (Integer.parseInt(sumOfCaloriesForBreakfast.getText().toString()))+
+        maxCaloriesIntakeValue.setText(user.getCalories_intake_daily().toString());
+        Integer sumOfCalories = (Integer.parseInt(sumOfCaloriesForBreakfast.getText().toString()))+
                 (Integer.parseInt(sumeOfCaloriesForDinner.getText().toString()))+
                 (Integer.parseInt(sumeOfCaloriesForLunch.getText().toString()))+
                 (Integer.parseInt(sumeOfCaloriesForSnacks.getText().toString()));
 
-        todaysCaloriesIntakeValue.setText(breakfast.toString());
-        Integer left = user.getUserCaloriesIntakeDaily()-breakfast;
+        todaysCaloriesIntakeValue.setText(sumOfCalories.toString());
+        Integer left = user.getCalories_intake_daily()-sumOfCalories;
         howManyCaloriesLeft.setText(left.toString());
     }
 

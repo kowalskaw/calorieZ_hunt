@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
-public class Product {
-    Integer productID;
+import java.io.Serializable;
+
+public class Product implements Serializable {
+    private Integer productID;
     String productsName;
     Integer caloriesForProduct;
 

@@ -3,7 +3,6 @@ package com.example.myapplication.ui.notifications;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +23,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.User;
 import com.google.android.material.textfield.TextInputEditText;
 
+
 public class NotificationsFragment extends Fragment {
     private NotificationsViewModel notificationsViewModel;
     private TextInputEditText firstName;
@@ -42,6 +42,7 @@ public class NotificationsFragment extends Fragment {
     private Button deleteUserButton;
 
     Integer id;
+    User user;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,6 +50,7 @@ public class NotificationsFragment extends Fragment {
         notificationsViewModel =
                 ViewModelProviders.of(this).get(NotificationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
+
         firstName = root.findViewById(R.id.userData_firstName);
         lastName = root.findViewById(R.id.userData_lastName);
         emailAdress = root.findViewById(R.id.userData_emailAdress);
@@ -59,6 +61,8 @@ public class NotificationsFragment extends Fragment {
         female = root.findViewById(R.id.userData_female);
 
         dataBaseHandler = new DataBaseHandler();
+
+        //requestQueue = Volley.newRequestQueue(this.getContext());
 
         logoutButton = root.findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +81,7 @@ public class NotificationsFragment extends Fragment {
         editUserDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //getRepoList("MadziaWesołek85");
                 Intent mainAppIntent = new Intent();
                 mainAppIntent.setClass(getActivity(), EditUserDataActivity.class);
                 onDetach();
@@ -138,13 +143,13 @@ public class NotificationsFragment extends Fragment {
     private void setUserData(User user) {
         //pobieranie danych o użytkowniku z bazy (byID)
 
-        firstName.setText(user.getUserFirsName());
-        lastName.setText(user.getUserLastName());
-        emailAdress.setText(user.getUserEmailAdress());
-        //birthDate.setText(user.getUserBirthDate().toString());
-        height.setText(user.getUserHeight().toString());
-        weight.setText(user.getUserWeight().toString());
-        if (user.getUserSex() == 1) {
+        firstName.setText(user.getFirst_name());
+        lastName.setText(user.getLast_name());
+        emailAdress.setText(user.getEmail());
+        //birthDate.setText(user.getBirthDate().toString());
+        height.setText(user.getHeight().toString());
+        weight.setText(user.getWeight().toString());
+        if (user.getSex() == 1) {
             male.setChecked(false);
             female.setChecked(true);
         } else {
@@ -152,34 +157,4 @@ public class NotificationsFragment extends Fragment {
             female.setChecked(false);
         }
     }
-
-    /*public void dialogEvent(View view){
-        deleteUserButton = (Button)view.findViewById(R.id.deleteUserButton);
-        deleteUserButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                View mView = getLayoutInflater().inflate(R.layout.dialog_deleteuser,null);
-                Button buttonYes = (Button)mView.findViewById(R.id.deleteUserYesButton);
-                Button buttonNo = (Button)mView.findViewById(R.id.deleteUserNoButton);
-                buttonYes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //wysyłamy dane - usuń użytkownika
-                        Toast.makeText(view.getContext(), "Usuwamy użytkownika", Toast.LENGTH_LONG).show();
-                    }
-                });
-                buttonNo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(view.getContext(), "Nie suwamy użytkownika", Toast.LENGTH_LONG).show();
-                    }
-                });
-                builder.setView(view);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-    }*/
-
 }
