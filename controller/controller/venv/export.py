@@ -66,14 +66,14 @@ def export_data():
     conn = sqlite3.connect("skrypt.db")
     cursor = conn.cursor()
     toExport = Export(conn, cursor)
+    list = []
 
     file = open("data.json", "w")
-    file.write(json.dumps({"Users": toExport.get_users()}, sort_keys=True, indent=4))
-    file.write(json.dumps({"Products": toExport.get_products()}, sort_keys=True, indent=4))
-    file.write(json.dumps({"Meal": toExport.get_meals()}, sort_keys=True, indent=4))
-    file.write(
-        json.dumps({"SpecificProductForMeal": toExport.get_specific_products_for_meals()}, sort_keys=True, indent=4))
-    file.close()
+    list.append({"Users": toExport.get_users()})
+    list.append({"Products": toExport.get_products()})
+    list.append({"Meal": toExport.get_meals()})
+    list.append({"SpecificProductForMeal": toExport.get_specific_products_for_meals()})
+    file.write(json.dumps(list, sort_keys=False, indent=4))
 
 
 if __name__ == '__main__':
