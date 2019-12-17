@@ -23,7 +23,7 @@ class Products:
             list_of_jsons.append(product_as_dict)
         return list_of_jsons
 
-    def user_tuple_to_dict_with_id(self, data):
+    def product_tuple_to_dict_with_id(self, data):
         list_of_jsons = []
         for one_tuple in data:
             product_as_dict = {
@@ -77,7 +77,7 @@ class Products:
             self.cursor.execute(query, product_tuple)
             self.conn.commit()
 
-            return self.cursor.lastrowid  # lastrowid returns generated id
+            return self.cursor.lastrowid
         else:
             return 'Product already exists in db'
 

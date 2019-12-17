@@ -63,7 +63,7 @@ def create_user():
                  'allergies': 'gluten laktoza',
                  'calories_intake_daily': 1900,
                  'weight_goal': 55,
-                 'user_name': 'MArmalfdiyfhead',
+                 'user_name': 'MarmoladaCzekolada',
                  'birthDate': '10.11.1985',
                  }
     endpoint = '/user'
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     #get_user_by_email()
     get_user_by_username()
     # query_users()
-    # create_user()
+    create_user()
     # query_users()
     # update_user()
     # query_users()
