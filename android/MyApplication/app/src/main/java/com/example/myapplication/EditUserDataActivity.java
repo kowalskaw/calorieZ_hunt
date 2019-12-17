@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,9 +9,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-
 import com.example.myapplication.ui.notifications.NotificationsViewModel;
 import com.google.android.material.textfield.TextInputEditText;
+
 
 public class EditUserDataActivity extends AppCompatActivity {
     DataBaseHandler dataBaseHandler;
@@ -26,7 +25,12 @@ public class EditUserDataActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private RadioButton male;
     private RadioButton female;
+
+
     User user;
+    //RequestQueue requestQueue;
+    String baseUrl = ("http://127.0.0.1:5000/user?user_name=");
+    String url;
 
     private Button saveUserDataButton;
 
@@ -34,6 +38,7 @@ public class EditUserDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_data);
+
 
         getSupportActionBar().setTitle("Zmiana danych");
         firstName = findViewById(R.id.userData_firstName);
@@ -45,6 +50,10 @@ public class EditUserDataActivity extends AppCompatActivity {
         male = findViewById(R.id.userData_male);
         female = findViewById(R.id.userData_female);
         linearLayout = findViewById(R.id.linearLayout);
+
+        //requestQueue = Volley.newRequestQueue(this);
+        /*getRepoList("MadziaWesołek85");*/
+
 
         dataBaseHandler = new DataBaseHandler();
 
@@ -74,16 +83,16 @@ public class EditUserDataActivity extends AppCompatActivity {
     }
 
     private void changeUser(User user){
-        user.setUserFirsName(firstName.getText().toString());
-        user.setUserLastName(lastName.getText().toString());
-        user.setUserEmailAdress(emailAdress.getText().toString());
-        //user.setUserBirthDate();
-        user.setUserHeight(Integer.valueOf(height.getText().toString()));
-        user.setUserWeight(Integer.valueOf(weight.getText().toString()));
+        user.setFirst_name(firstName.getText().toString());
+        user.setLast_name(lastName.getText().toString());
+        user.setEmail(emailAdress.getText().toString());
+        //user.setBirthDate();
+        user.setHeight(Integer.valueOf(height.getText().toString()));
+        user.setWeight(Integer.valueOf(weight.getText().toString()));
         if (male.isChecked()&&!female.isChecked()) {
-            user.setUserSex(1);
+            user.setSex(1);
         } else if(!male.isChecked()&&female.isChecked()){
-            user.setUserSex(2);
+            user.setSex(2);
         }
     }
 
@@ -94,13 +103,13 @@ public class EditUserDataActivity extends AppCompatActivity {
         }
     }
     private void setUserData(User user) {
-        firstName.setText(user.getUserFirsName());
-        lastName.setText(user.getUserLastName());
-        emailAdress.setText(user.getUserEmailAdress());
-        //birthDate.setText(user.getUserBirthDate().toString());
-        height.setText(user.getUserHeight().toString());
-        weight.setText(user.getUserWeight().toString());
-        if (user.getUserSex() == 1) {
+        firstName.setText(user.getFirst_name());
+        lastName.setText(user.getLast_name());
+        emailAdress.setText(user.getEmail());
+        //birthDate.setText(user.getBirthDate().toString());
+        height.setText(user.getHeight().toString());
+        weight.setText(user.getWeight().toString());
+        if (user.getSex() == 1) {
             male.setChecked(false);
             female.setChecked(true);
         } else {

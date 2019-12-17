@@ -1,147 +1,159 @@
 package com.example.myapplication;
 
-import android.content.Intent;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class User {
-    private Integer userID;
-    private String userPassword;
-    private String userFirsName;
-    private String userLastName;
-    private String userEmailAdress;
-    private int userSex;
-    private Integer userWeight;
-    private Integer userHeight;
-    //private ArrayList<String>userAlergies;
-    private int userCaloriesIntakeDaily;
-    private int userWeightGoal;
-    private String userName;
-    private Date userBirthDate;
+public class User implements Serializable {
+
+    private Integer id;
+
+    private String password;
+
+    private String first_name;
+
+    private String last_name;
+
+    private String email;
+
+    private int sex;
+
+    private Integer weight;
+
+    private Integer height;
+
+    private ArrayList<String>allergies;
+
+    private int calories_intake_daily;
+
+    private int weight_goal;
+
+    private String user_name;
+
+    private Date birthDate;
 
     public User(){}
 
-    public User(Integer userID, String userPassword, String userFirsName, String userLastName,
-                String userEmailAdress, int userSex, int userWeight, int userHeight
-            /*,ArrayList<String> userAlergies*/, int userCaloriesIntakeDaily, int userWeightGoal,
-                String userName, Date userBirthDate) {
-        this.userID = userID;
-        this.userPassword = userPassword;
-        this.userFirsName = userFirsName;
-        this.userLastName = userLastName;
-        this.userEmailAdress = userEmailAdress;
-        this.userSex = userSex;
-        this.userWeight = userWeight;
-        this.userHeight = userHeight;
-        //this.userAlergies = userAlergies;
-        this.userCaloriesIntakeDaily = userCaloriesIntakeDaily;
-        this.userWeightGoal = userWeightGoal;
-        this.userName = userName;
-        this.userBirthDate = userBirthDate;
+    public User(Integer userID, String password, String first_name, String last_name,
+                String userEmailAdress, int sex, int weight, int height
+            /*,ArrayList<String> allergies*/, int calories_intake_daily, int weight_goal,
+                String user_name, Date birthDate) {
+        this.id = userID;
+        this.password = password;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = userEmailAdress;
+        this.sex = sex;
+        this.weight = weight;
+        this.height = height;
+        //this.allergies = allergies;
+        this.calories_intake_daily = calories_intake_daily;
+        this.weight_goal = weight_goal;
+        this.user_name = user_name;
+        this.birthDate = birthDate;
     }
 
-    public Integer getUserID() {
-        return userID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getUserFirsName() {
-        return userFirsName;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setUserFirsName(String userFirsName) {
-        this.userFirsName = userFirsName;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getUserLastName() {
-        return userLastName;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setUserLastName(String userLastName) {
-        this.userLastName = userLastName;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
-    public String getUserEmailAdress() {
-        return userEmailAdress;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserEmailAdress(String userEmailAdress) {
-        this.userEmailAdress = userEmailAdress;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public int getUserSex() {
-        return userSex;
+    public int getSex() {
+        return sex;
     }
 
-    public void setUserSex(int userSex) {
-        this.userSex = userSex;
+    public void setSex(int sex) {
+        this.sex = sex;
     }
 
-    public Integer getUserWeight() {
-        return userWeight;
+    public Integer getWeight() {
+        return weight;
     }
 
-    public void setUserWeight(int userWeight) {
-        this.userWeight = userWeight;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
-    public Integer getUserHeight() {
-        return userHeight;
+    public Integer getHeight() {
+        return height;
     }
 
-    public void setUserHeight(int userHeight) {
-        this.userHeight = userHeight;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    /*public ArrayList<String> getUserAlergies() {
-        return userAlergies;
+    /*public ArrayList<String> getUserAllergies() {
+        return allergies;
     }
 
-    public void setUserAlergies(ArrayList<String> userAlergies) {
-        this.userAlergies = userAlergies;
+    public void setUserAllergies(ArrayList<String> allergies) {
+        this.allergies = allergies;
     }*/
 
-    public Integer getUserCaloriesIntakeDaily() {
-        return userCaloriesIntakeDaily;
+    public Integer getCalories_intake_daily() {
+        return calories_intake_daily;
     }
 
-    public void setUserCaloriesIntakeDaily(int userCaloriesIntakeDaily) {
-        this.userCaloriesIntakeDaily = userCaloriesIntakeDaily;
+    public void setCalories_intake_daily(int calories_intake_daily) {
+        this.calories_intake_daily = calories_intake_daily;
     }
 
-    public Integer getUserWeightGoal() {
-        return userWeightGoal;
+    public Integer getWeight_goal() {
+        return weight_goal;
     }
 
-    public void setUserWeightGoal(int userWeightGoal) {
-        this.userWeightGoal = userWeightGoal;
+    public void setWeight_goal(int weight_goal) {
+        this.weight_goal = weight_goal;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
-    public Date getUserBirthDate() {
-        return userBirthDate;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setUserBirthDate(Date userBirthDate) {
-        this.userBirthDate = userBirthDate;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 }
