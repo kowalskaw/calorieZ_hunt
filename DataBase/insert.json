@@ -1,0 +1,245 @@
+[
+    {
+        "Users": [
+            {
+                "id": 1,
+				"password": "password",
+				"first_name": "Jan",
+				"last_name": "Kowalski",
+				"email": "jan.kowalski@gmail.com",
+				"sex": 1,
+				"weight": 80.0,
+				"height": 185.0,
+				"allergies": "gluten laktoza",
+				"calories_intake_daily": 1900.0,
+				"weight_goal": 75.0,
+				"user_name": "MarmoladaCzekolada",
+				"birthDate": "10.11.1985"
+            }
+        ]
+    },
+    {
+        "Products": [
+            {
+                "id": 1,
+				"name": "sok jabłkowy",
+				"calories_in_100_grams": 46,
+				"protein": 0.1,
+				"carbs": 11.3,
+				"fats": 0.1,
+				"one_portion_in_grams": 240.0,
+				"allergens": "jabłko"
+            },
+			{
+                "id": 2,
+				"name": "sok marchewkowy",
+				"calories_in_100_grams": 40,
+				"protein": 0.9,
+				"carbs": 9.3,
+				"fats": 0.1,
+				"one_portion_in_grams": 240.0,
+				"allergens": "marchew"
+            },
+			{
+                "id": 3,
+				"name": "sok wiśniowy",
+				"calories_in_100_grams": 23,
+				"protein": 0.4,
+				"carbs": 4.8,
+				"fats": 0.3,
+				"one_portion_in_grams": 240.0,
+				"allergens": "wiśnie"
+            },
+			{
+                "id": 4,
+				"name": "Red Bull",
+				"calories_in_100_grams": 43,
+				"protein": 0.5,
+				"carbs": 10.2,
+				"fats": 0,
+				"one_portion_in_grams": 240.0,
+				"allergens": ""
+            },
+			{
+                "id": 5,
+				"name": "sok cytrynowy",
+				"calories_in_100_grams": 22,
+				"protein": 0.3,
+				"carbs": 6.8,
+				"fats": 0.2,
+				"one_portion_in_grams": 240.0,
+				"allergens": "cytryna"
+            },
+			{
+                "id": 6,
+				"name": "wołowina",
+				"calories_in_100_grams": 270,
+				"protein": 25.6,
+				"carbs": 0,
+				"fats": 17.9,
+				"one_portion_in_grams": 139.0,
+				"allergens": "albumina wołowa immunoglobulina"
+            },
+			{
+                "id": 7,
+				"name": "piwo",
+				"calories_in_100_grams": 43,
+				"protein": 0.5,
+				"carbs": 3.5,
+				"fats": 0,
+				"one_portion_in_grams": 330.0,
+				"allergens": "słód jęczmienny drożdże chmiel"
+            },
+			{
+                "id": 8,
+				"name": "sernik",
+				"calories_in_100_grams": 321,
+				"protein": 5.5,
+				"carbs": 25.5,
+				"fats": 22.5,
+				"one_portion_in_grams": 80.0,
+				"allergens": "mleko jaja orzechy"
+            },
+			{
+                "id": 9,
+				"name": "snickers",
+				"calories_in_100_grams": 491,
+				"protein": 7.5,
+				"carbs": 61.5,
+				"fats": 23.9,
+				"one_portion_in_grams": 57.0,
+				"allergens": "gluten mleko jaja orzechy"
+            },
+			{
+                "id": 10,
+				"name": "mars",
+				"calories_in_100_grams": 491,
+				"protein": 7.5,
+				"carbs": 61.5,
+				"fats": 23.9,
+				"one_portion_in_grams": 57.0,
+				"allergens": "gluten mleko jaja orzechy"
+            },
+			{
+                "id": 11,
+				"name": "camembert",
+				"calories_in_100_grams": 300,
+				"protein": 19.8,
+				"carbs": 0.5,
+				"fats": 24.3,
+				"one_portion_in_grams": 30.0,
+				"allergens": "mleko"
+            },
+			{
+                "id": 12,
+				"name": "ser cheddar",
+				"calories_in_100_grams": 403,
+				"protein": 22.9,
+				"carbs": 3.4,
+				"fats": 33.3,
+				"one_portion_in_grams": 28.0,
+				"allergens": "mleko"
+            },
+			{
+                "id": 13,
+				"name": "ser żółty",
+				"calories_in_100_grams": 357,
+				"protein": 25.0,
+				"carbs": 1.4,
+				"fats": 27.8,
+				"one_portion_in_grams": 30.0,
+				"allergens": "mleko"
+            },
+			{
+                "id": 14,
+				"name": "salami",
+				"calories_in_100_grams": 261,
+				"protein": 12.6,
+				"carbs": 1.9,
+				"fats": 22.2,
+				"one_portion_in_grams": 26.0,
+				"allergens": ""
+            },
+			{
+                "id": 15,
+				"name": "pizza z serem",
+				"calories_in_100_grams": 266,
+				"protein": 11.4,
+				"carbs": 33.3,
+				"fats": 9.7,
+				"one_portion_in_grams": 107.0,
+				"allergens": "mleko"
+            },
+			{
+                "id": 16,
+				"name": "spaghetti",
+				"calories_in_100_grams": 158,
+				"protein": 5.8,
+				"carbs": 30.9,
+				"fats": 0.9,
+				"one_portion_in_grams": 230.0,
+				"allergens": "gluten"
+            },
+			{
+                "id": 17,
+				"name": "bagietka",
+				"calories_in_100_grams": 253,
+				"protein": 14.0,
+				"carbs": 27.4,
+				"fats": 9.7,
+				"one_portion_in_grams": 191.0,
+				"allergens": "gluten"
+            },
+			{
+                "id": 18,
+				"name": "rosół",
+				"calories_in_100_grams": 48,
+				"protein": 2.4,
+				"carbs": 6.1,
+				"fats": 1.6,
+				"one_portion_in_grams": 303.0,
+				"allergens": ""
+            },
+			{
+                "id": 19,
+				"name": "rosół",
+				"calories_in_100_grams": 48,
+				"protein": 2.4,
+				"carbs": 6.1,
+				"fats": 1.6,
+				"one_portion_in_grams": 303.0,
+				"allergens": ""
+            },
+			{
+                "id": 20,
+				"name": "zupa pomidorowa",
+				"calories_in_100_grams": 96,
+				"protein": 1.8,
+				"carbs": 18.5,
+				"fats": 1.9,
+				"one_portion_in_grams": 250.0,
+				"allergens": ""
+            }
+			
+        ]
+    },
+    {
+        "Meal": [
+            {
+                "id": 1,
+                "mealType": 1,
+                "date": "2019.12.11",
+                "userId": 1
+            }
+        ]
+    },
+    {
+        "SpecificProductForMeal": [
+            {
+                "productId": 1,
+                "mealId": 1,
+                "portionInGrams": 1
+            }
+        ]
+    }
+]
