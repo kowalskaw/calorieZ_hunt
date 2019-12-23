@@ -1,6 +1,7 @@
 from flask import Flask, request
 from users_controller import *
 from products_controller import *
+from export import get_generated_json
 
 app = Flask(__name__)
 
@@ -125,6 +126,16 @@ def product():
             return 'Product with id ' + str(id) + ' deleted from db'
     else:
         return 'Invalid request'
+
+
+@app.route('/import-db', methods=['POST'])
+def import_db():
+    print('import users')
+
+
+@app.route('/export-db', methods=['GET'])
+def export_db():
+    return json.dumps(get_generated_json(), sort_keys=False, indent=4)
 
 
 if __name__ == '__main__':

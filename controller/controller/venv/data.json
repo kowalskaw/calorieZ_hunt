@@ -1,0 +1,96 @@
+[
+    {
+        "Users": [
+            {
+                "id": 1,
+                "password": null,
+                "first_name": "Anna",
+                "last_name": "a",
+                "email": null,
+                "sex": "f",
+                "weight": 60.0,
+                "height": 200.0,
+                "allergies": "laktoza gluten",
+                "calories_intake_daily": null,
+                "weight_goal": null,
+                "user_name": "lol",
+                "birthDate": "1970-01-01 00:00:00"
+            },
+            {
+                "id": 2,
+                "password": "haha",
+                "first_name": "Weronika",
+                "last_name": "NN",
+                "email": null,
+                "sex": 0,
+                "weight": 50.0,
+                "height": 160.0,
+                "allergies": "o",
+                "calories_intake_daily": null,
+                "weight_goal": null,
+                "user_name": "lalal",
+                "birthDate": "1970-01-01 00:00:00"
+            },
+            {
+                "id": 3,
+                "password": null,
+                "first_name": "Hanna",
+                "last_name": "L",
+                "email": null,
+                "sex": 1,
+                "weight": 60.0,
+                "height": 112.0,
+                "allergies": "b",
+                "calories_intake_daily": null,
+                "weight_goal": null,
+                "user_name": 5,
+                "birthDate": "1970-01-01 00:00:00"
+            }
+        ]
+    },
+    {
+        "Products": [
+            {
+                "id": 1,
+                "name": null,
+                "calories_in_100_grams": null,
+                "protein": null,
+                "carbs": null,
+                "fats": null,
+                "one_portion_in_grams": null,
+                "user_id": null,
+                "allergens": "a gluten"
+            },
+            {
+                "id": 2,
+                "name": "dobre am",
+                "calories_in_100_grams": null,
+                "protein": null,
+                "carbs": null,
+                "fats": null,
+                "one_portion_in_grams": null,
+                "user_id": null,
+                "allergens": "co\u015b nana"
+            }
+        ]
+    },
+    {
+        "Meal": [
+            {
+                "id": 1,
+                "mealType": 1,
+                "date": "2019.12.11",
+                "userId": 1
+            }
+        ]
+    },
+    {
+        "SpecificProductForMeal": [
+            {
+                "productId": 1,
+                "mealId": 50,
+                "portionInGrams": 1
+            }
+        ]
+    }
+]

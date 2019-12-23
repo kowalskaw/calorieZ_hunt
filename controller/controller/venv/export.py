@@ -76,5 +76,12 @@ def export_data():
     file.write(json.dumps(list, sort_keys=False, indent=4))
 
 
+def get_generated_json():
+    export_data()
+    with open('data.json') as json_file:
+        data = json.load(json_file)
+    return data
+
+
 if __name__ == '__main__':
     export_data()
