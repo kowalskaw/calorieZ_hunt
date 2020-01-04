@@ -130,6 +130,10 @@ def product():
 
 @app.route('/import-db', methods=['POST'])
 def import_db():
+    to_import = Import(conn, cursor)
+
+    to_import.add_users("insert.json")
+    to_import.add_products("insert.json")
     print('import users')
 
 

@@ -84,5 +84,7 @@ def test():
     toImport.add_products("insert.json")
 
 
+# dodawanie wszystkiego z jednego pliku a nie z osobnych
+
 if __name__ == '__main__':
     test()
