@@ -25,9 +25,7 @@ class Import:
         products = x[1]['Products']
         return products
 
-    def add_users(self, path):
-        users = self.get_users(path)
-
+    def add_users(self, users):
         for i in users:
             user_tuple = Users.json_to_tuple_without_id(self, json.dumps(i))
 
@@ -50,11 +48,9 @@ class Import:
             else:
                 print("User already exists")
 
-    def add_products(self, path):
-        products = self.get_products(path)
+    def add_products(self, products):
         for i in products:
             product_tuple = Products.json_to_tuple_without_id(self, json.dumps(i))
-
             check = '''
                 SELECT * FROM Products where name = ?
             '''
@@ -74,17 +70,46 @@ class Import:
             else:
                 print("Product already exists")
 
+    def add_meals(self, meals):
+        for i in meals:
+            meal_tuple = Products.json_to_tuple_without_id(self, json.dumps(i))
+            check = '''
+            SELECT * FROM Meal where meal_type = ? and date = ? and user_id = ? 
+            '''
+
+            self.cursor.execute(check, meal_tuple[1:])
+            data = self.cursor.fetchall()
+
+            if data == []:
+                meal_tuple = meal_tuple[1:]
+                query = '''
+                    INSERT INTO Meal(meal_type,date,user_id)
+                    VALUES(?,?,?)
+                '''
+                self.cursor.execute(query, meal_tuple)
+                self.conn.commit()
+                print("Meal added")
+            else:
+                print("Meal already exists")
+
+    def import_all(self, path):
+        data = self.load_json(path)
+        users = data[0]['Users']
+        products = data[1]['Products']
+        meals = data[2]['Meal']
+
+        self.add_products(products)
+        self.add_users(users)
+        self.add_meals(meals)
+
 
 def test():
     conn = sqlite3.connect("skrypt.db")
     cursor = conn.cursor()
     toImport = Import(conn, cursor)
 
-    toImport.add_users("insert.json")
-    toImport.add_products("insert.json")
+    toImport.import_all("insert.json")
 
-
-# dodawanie wszystkiego z jednego pliku a nie z osobnych
 
 if __name__ == '__main__':
     test()

@@ -75,6 +75,8 @@ def export_data():
     list.append({"SpecificProductForMeal": toExport.get_specific_products_for_meals()})
     file.write(json.dumps(list, sort_keys=False, indent=4))
 
+    print("Data exported")
+
 
 def get_generated_json():
     export_data()
