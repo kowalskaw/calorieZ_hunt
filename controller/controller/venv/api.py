@@ -131,10 +131,8 @@ def product():
 @app.route('/import-db', methods=['POST'])
 def import_db():
     to_import = Import(conn, cursor)
-
-    to_import.add_users("insert.json")
-    to_import.add_products("insert.json")
-    print('import users')
+    toImport.import_all("insert.json")
+    return "Db imported"
 
 
 @app.route('/export-db', methods=['GET'])
@@ -143,4 +141,5 @@ def export_db():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=80)
+

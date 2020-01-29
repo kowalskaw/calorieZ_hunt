@@ -1,7 +1,7 @@
 import requests
 import json
 
-main_url = "http://127.0.0.1:5000"
+main_url = "http://192.168.99.100:5678"
 
 
 def print_respone(response):
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     #get_user_by_email()
     get_user_by_username()
     # query_users()
-    create_user()
+    #create_user()
     # query_users()
     # update_user()
     # query_users()
